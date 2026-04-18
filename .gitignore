@@ -21,3 +21,14 @@ results/
 
 # OS files
 .DS_Store
+  
+# Temporary lock files
+.~lock.*
+*~
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual env
+venv/
