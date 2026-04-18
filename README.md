@@ -35,7 +35,7 @@ Python
 Flask
 
 AI/ML-
-TensorFlow / PyTorch
+PyTorch
 QGAN (Quantum Generative Adversarial Network)
 CNN-based feature extraction
 
@@ -62,3 +62,11 @@ SQLite
 
 
  🏠 Home Page 
+ <img width="1332" height="598" alt="Screenshot from 2026-04-15 00-12-49" src="https://github.com/user-attachments/assets/950c47e2-aefb-4e29-a322-0e1fcd0f37a3" />
+<img width="1358" height="392" alt="Screenshot from 2026-04-15 00-19-54" src="https://github.com/user-attachments/assets/11c4308e-25a4-4c00-9268-24b535ec5f9e" />
+<img width="1298" height="490" alt="Screenshot from 2026-04-15 00-20-51" src="https://github.com/user-attachments/assets/860596af-f146-435f-a489-e1ac0edee871" />
+
+
+
+ 
+
