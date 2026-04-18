@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="space-y-8">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Processed results</p>
+      <h2 class="text-4xl font-semibold">Gallery</h2>
+      {% if user %}
+      <p class="mt-2 text-slate-400 max-w-2xl">Showing uploads for {{ user.full_name or user.email }}.</p>
+      {% else %}
+      <p class="mt-2 text-slate-400 max-w-2xl">Log in to see your saved uploads. Anonymous gallery entries are still visible here.</p>
+      {% endif %}
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href="/" class="inline-flex items-center justify-center rounded-full bg-slate-200 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-slate-100">Upload new image</a>
+      {% if user %}
+      <a href="/logout" class="inline-flex items-center justify-center rounded-full border border-slate-700 px-5 py-3 text-sm text-slate-200 hover:border-cyan-400">Logout</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <form method="get" action="/gallery" class="rounded-3xl border border-slate-800 bg-slate-900/90 p-6 shadow-2xl">
+    <div class="grid gap-4 sm:grid-cols-[1fr_auto] items-end">
+      <label class="block">
+        <span class="text-slate-400 text-sm">Search gallery</span>
+        <input name="q" value="{{ query or '' }}" placeholder="Search filename, tags, description, patient ID" class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+      </label>
+      <button type="submit" class="rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Search</button>
+    </div>
+  </form>
+
+  {% if results %}
+  <div class="grid gap-6 xl:grid-cols-2">
+    {% for item in results %}
+    <article class="rounded-3xl bg-slate-900/90 border border-slate-800 p-6 shadow-2xl">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div class="min-w-0">
+          <p class="text-slate-400 text-sm">{{ item.timestamp }}</p>
+          <h3 class="text-xl font-semibold mt-1 truncate">{{ item.filename }}</h3>
+          {% if item.patient_id %}
+          <p class="text-slate-500 text-sm mt-1">Patient ID: {{ item.patient_id }}</p>
+          {% endif %}
+        </div>
+        <div class="flex flex-wrap gap-3 items-center justify-start sm:justify-end">
+          <a href="{{ item.result_url }}" class="rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-200 hover:bg-cyan-500/20">Download result</a>
+          {% if item.is_owner %}
+          <form method="post" action="/gallery/delete/{{ item.id }}" onsubmit="return confirm('Delete this upload?');">
+            <button type="submit" class="rounded-full border border-rose-500 bg-rose-500/10 px-4 py-2 text-sm text-rose-300 hover:bg-rose-500/20">Delete</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-3xl overflow-hidden bg-slate-950 border border-slate-800">
+          <p class="bg-slate-900 px-4 py-3 text-sm text-slate-400">Original</p>
+          <img src="{{ item.original_url }}" alt="Original image" class="w-full h-64 object-cover">
+        </div>
+        <div class="rounded-3xl overflow-hidden bg-slate-950 border border-slate-800">
+          <p class="bg-slate-900 px-4 py-3 text-sm text-emerald-300">Enhanced</p>
+          <img src="{{ item.result_url }}" alt="Enhanced image" class="w-full h-64 object-cover">
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-center justify-end">
+        <form method="post" action="/gallery/delete/{{ item.id }}" onsubmit="return confirm('Delete this upload?');">
+          <button type="submit" class="rounded-full border border-rose-500 bg-rose-500/10 px-4 py-2 text-sm text-rose-300 hover:bg-rose-500/20">Delete image</button>
+        </form>
+      </div>
+
+      {% if item.description or item.tags %}
+      <div class="mt-6 rounded-3xl border border-slate-800 bg-slate-950 p-4 text-sm text-slate-400">
+        {% if item.description %}<p><strong class="text-slate-200">Description:</strong> {{ item.description }}</p>{% endif %}
+        {% if item.tags %}<p class="mt-2"><strong class="text-slate-200">Tags:</strong> {{ item.tags }}</p>{% endif %}
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="rounded-3xl border border-slate-800 bg-slate-900/90 p-10 text-center text-slate-400">
+    No matching uploads found. Try another search or <a href="/" class="text-cyan-300 underline">upload a new image</a>.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

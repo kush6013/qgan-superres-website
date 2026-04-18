@@ -1,0 +1,23 @@
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Database
+*.db
+
+# Model files (important)
+*.h5
+*.pt
+*.pth
+
+# Uploads / results
+uploads/
+results/
+
+# OS files
+.DS_Store

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto rounded-3xl bg-slate-900/90 border border-slate-800 p-10 shadow-2xl text-center">
+  <div class="mb-6">
+    <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Reset token created</p>
+    <h2 class="text-4xl font-semibold mt-3">Password reset is ready</h2>
+    <p class="mt-2 text-slate-400">Use the link below to reset your password. In production, this would be emailed to you.</p>
+  </div>
+  <div class="rounded-3xl border border-slate-800 bg-slate-950 p-6 text-left text-sm text-slate-200">
+    <p class="break-all">{{ reset_link }}</p>
+  </div>
+  <a href="/" class="inline-flex mt-6 items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Back to home</a>
+</div>
+{% endblock %}

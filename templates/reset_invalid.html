@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto rounded-3xl bg-slate-900/90 border border-slate-800 p-10 shadow-2xl text-center">
+  <div class="mb-6">
+    <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Reset password</p>
+    <h2 class="text-4xl font-semibold mt-3">Invalid or expired token</h2>
+    <p class="mt-2 text-slate-400">Please request a new password reset token.</p>
+  </div>
+  <a href="/reset-password" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Request a new token</a>
+</div>
+{% endblock %}

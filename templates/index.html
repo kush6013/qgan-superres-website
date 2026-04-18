@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] items-start">
+  <section class="space-y-6">
+    <div class="rounded-3xl bg-slate-900/90 border border-slate-800 p-8 shadow-2xl">
+      <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <div>
+            <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Medical super-resolution</p>
+            <h2 class="text-4xl font-semibold">Upload a scan for QGAN enhancement</h2>
+          </div>
+          {% if user %}
+          <div class="rounded-full bg-slate-800 px-4 py-2 text-sm text-slate-300">Logged in as {{ user.full_name or user.email }}</div>
+          {% else %}
+          <div class="space-x-3 text-sm">
+            <a href="/login" class="text-cyan-300 hover:text-cyan-200">Login</a>
+            <a href="/register" class="text-slate-200 hover:text-white">Register</a>
+          </div>
+          {% endif %}
+        </div>
+
+        <p class="text-slate-400 max-w-2xl">Drop your medical scan (CT, MRI, X-ray) or choose a file to create a higher-resolution version. PNG, JPG, JPEG, DICOM, and NIfTI uploads are supported when the required medical imaging libraries are installed.</p>
+      </div>
+
+      <div id="drop-zone" class="upload-drop-zone mt-8 rounded-3xl border-2 border-dashed border-slate-700 bg-slate-950/70 p-10 text-center transition hover:border-cyan-400 hover:bg-slate-900 cursor-pointer">
+        <p class="text-4xl text-cyan-300">&#8593;</p>
+        <p class="mt-3 text-slate-300">Drop your medical image here with up side arrow</p>
+        <p class="mt-3 text-sm text-slate-500">PNG, JPG, JPEG, DICOM, and NIfTI are accepted by supported format.</p>
+        <button type="button" id="select-image-button" class="mt-6 inline-flex items-center justify-center rounded-full border border-cyan-500/40 bg-cyan-500/10 px-5 py-3 text-sm font-medium text-cyan-200 hover:bg-cyan-500/20">Select Image</button>
+      </div>
+
+      <input id="file-input" type="file" name="file" accept=".png,.jpg,.jpeg,.dcm,.nii,.nii.gz,image/*" class="hidden">
+
+      <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-slate-500 text-sm">Choose a scan file and the server will enhance it automatically at 8x resolution.</p>
+        <button id="upload-button" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Upload and enhance</button>
+      </div>
+    </div>
+
+    <div id="result-section" class="hidden rounded-3xl bg-slate-900/90 border border-slate-800 p-6 shadow-2xl">
+      <!-- Result appears here -->
+    </div>
+  </section>
+
+  <aside class="space-y-6">
+    <div class="rounded-3xl bg-slate-900/90 border border-slate-800 p-6 shadow-2xl">
+      <h3 class="text-xl font-semibold mb-4">How it works</h3>
+      <ul class="space-y-3 text-slate-400 text-sm">
+        <li>• Upload a medical image with optional metadata.</li>
+        <li>• The QGAN-inspired model enhances resolution by 8x.</li>
+        <li>• Optional hybrid quantum refinement is available for experimentation.</li>
+        <li>• Compare the original and result instantly.</li>
+        <li>• Search your gallery by filename, description, tags, and patient ID.</li>
+      </ul>
+    </div>
+    <div class="rounded-3xl bg-slate-900/90 border border-slate-800 p-6 shadow-2xl">
+      <h3 class="text-xl font-semibold mb-4">Tip</h3>
+      <p class="text-slate-400 text-sm">For best results, use a clean scan with clear edges and contrast. Fill metadata so you can find uploads quickly later.</p>
+    </div>
+  </aside>
+</div>
+{% endblock %}

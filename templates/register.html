@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto rounded-3xl bg-slate-900/90 border border-slate-800 p-10 shadow-2xl">
+  <div class="mb-6">
+    <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Create account</p>
+    <h2 class="text-4xl font-semibold mt-3">Register for QGAN uploads</h2>
+    <p class="mt-2 text-slate-400">Sign up to save your medical image uploads and keep the gallery filtered to your results.</p>
+  </div>
+
+  {% if error %}
+  <div class="mb-4 rounded-2xl border border-rose-600 bg-rose-950/80 p-4 text-rose-200">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" class="space-y-5">
+    <label class="block">
+      <span class="text-slate-300 text-sm">Full name</span>
+      <input name="full_name" type="text" placeholder="Optional" class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+    </label>
+    <label class="block">
+      <span class="text-slate-300 text-sm">Email</span>
+      <input name="email" type="email" required class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+    </label>
+    <label class="block">
+      <span class="text-slate-300 text-sm">Password</span>
+      <input name="password" type="password" required class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+    </label>
+    <button type="submit" class="w-full rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Register</button>
+  </form>
+
+  <p class="mt-6 text-sm text-slate-400">Already have an account? <a href="/login" class="text-cyan-300 underline">Login here</a>.</p>
+</div>
+{% endblock %}

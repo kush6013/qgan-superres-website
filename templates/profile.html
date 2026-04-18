@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto rounded-3xl bg-slate-900/90 border border-slate-800 p-10 shadow-2xl">
+  <div class="mb-6">
+    <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Your profile</p>
+    <h2 class="text-4xl font-semibold mt-3">Account details</h2>
+    <p class="mt-2 text-slate-400">Update your name or change your password. Your email cannot be changed here.</p>
+  </div>
+
+  {% if success %}
+  <div class="mb-4 rounded-2xl border border-emerald-600 bg-emerald-950/80 p-4 text-emerald-200">{{ success }}</div>
+  {% endif %}
+  {% if error %}
+  <div class="mb-4 rounded-2xl border border-rose-600 bg-rose-950/80 p-4 text-rose-200">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" class="space-y-6">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <label class="block">
+        <span class="text-slate-300 text-sm">Full name</span>
+        <input name="full_name" type="text" value="{{ user.full_name or '' }}" class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+      </label>
+      <label class="block">
+        <span class="text-slate-300 text-sm">Email</span>
+        <input value="{{ user.email }}" disabled class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-400" />
+      </label>
+    </div>
+
+    <div class="rounded-3xl border border-slate-800 bg-slate-950 p-6">
+      <p class="text-slate-300 font-semibold mb-4">Change password</p>
+      <div class="grid gap-4">
+        <label class="block">
+          <span class="text-slate-300 text-sm">Current password</span>
+          <input name="current_password" type="password" class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+        </label>
+        <label class="block">
+          <span class="text-slate-300 text-sm">New password</span>
+          <input name="new_password" type="password" class="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none" />
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Save profile</button>
+  </form>
+</div>
+{% endblock %}

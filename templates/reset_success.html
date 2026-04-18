@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto rounded-3xl bg-slate-900/90 border border-slate-800 p-10 shadow-2xl text-center">
+  <div class="mb-6">
+    <p class="text-cyan-300 uppercase tracking-[0.3em] text-xs">Password reset</p>
+    <h2 class="text-4xl font-semibold mt-3">Password updated</h2>
+    <p class="mt-2 text-slate-400">Your password has been reset successfully. You can now log in with your new password.</p>
+  </div>
+  <a href="/login" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Go to login</a>
+</div>
+{% endblock %}
