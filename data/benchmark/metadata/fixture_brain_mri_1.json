@@ -1,0 +1,19 @@
+{
+  "sample_id": "fixture_brain_mri_1",
+  "modality": "brain_mri",
+  "source_dataset": "synthetic_benchmark_fixtures",
+  "original_filename": "fixture_brain_mri_1_gt.png",
+  "original_dimensions": [
+    256,
+    256
+  ],
+  "channel_count": 1,
+  "bit_depth": 8,
+  "original_format": "PNG",
+  "ground_truth_path": "data/benchmark/ground_truth/fixture_brain_mri_1_gt.png",
+  "split": "test",
+  "reference_type": "synthetic_ground_truth",
+  "patient_id": "PAT_BRA_2",
+  "degradation_config_id": null,
+  "checksum": "2876fa5bbda136540d5f41dc1065715c6e9e2b697398c8cfc27a3de025c56067"
+}

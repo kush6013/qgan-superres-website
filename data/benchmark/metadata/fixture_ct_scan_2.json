@@ -1,0 +1,19 @@
+{
+  "sample_id": "fixture_ct_scan_2",
+  "modality": "ct_scan",
+  "source_dataset": "synthetic_benchmark_fixtures",
+  "original_filename": "fixture_ct_scan_2_gt.png",
+  "original_dimensions": [
+    256,
+    256
+  ],
+  "channel_count": 1,
+  "bit_depth": 8,
+  "original_format": "PNG",
+  "ground_truth_path": "data/benchmark/ground_truth/fixture_ct_scan_2_gt.png",
+  "split": "test",
+  "reference_type": "synthetic_ground_truth",
+  "patient_id": "PAT_CT__4",
+  "degradation_config_id": null,
+  "checksum": "171e93a963cd0ff968652c402d7fddd3699cffb77f7c56175679f4e1ae00529f"
+}

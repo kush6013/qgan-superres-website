@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  qgan-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qgan_medical_superres
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - APP_ENV=production
+      - SESSION_SECRET=${SESSION_SECRET:-change_me_to_a_secure_random_production_secret}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./results:/app/results
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./database.db:/app/database.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

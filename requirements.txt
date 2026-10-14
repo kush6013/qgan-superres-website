@@ -1,0 +1,23 @@
+# Core Web Framework & ASGI Server
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+jinja2>=3.1.4
+python-multipart>=0.0.12
+itsdangerous>=2.2.0
+
+# Security & Authentication
+bcrypt>=4.2.0
+
+# Database ORM
+SQLAlchemy>=2.0.30
+
+# Computer Vision & Deep Learning (PyTorch & Torchvision)
+torch>=2.2.0
+torchvision>=0.17.0
+Pillow>=10.2.0
+numpy>=1.26.0
+scipy>=1.12.0
+
+# Medical Imaging (DICOM & NIfTI)
+pydicom>=2.4.4
+nibabel>=5.2.1

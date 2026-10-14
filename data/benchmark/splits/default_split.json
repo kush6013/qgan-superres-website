@@ -1,0 +1,36 @@
+{
+  "manifest_id": "manifest_seed42_8samples",
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "patient_level_grouping": true,
+  "train_sample_ids": [
+    "fixture_chest_xray_1",
+    "fixture_chest_xray_2",
+    "fixture_ct_scan_1",
+    "fixture_ct_scan_2"
+  ],
+  "val_sample_ids": [
+    "fixture_general_1",
+    "fixture_general_2"
+  ],
+  "test_sample_ids": [
+    "fixture_brain_mri_1",
+    "fixture_brain_mri_2"
+  ],
+  "counts": {
+    "train": 4,
+    "val": 2,
+    "test": 2
+  },
+  "patient_counts": {
+    "train": 2,
+    "val": 1,
+    "test": 1
+  },
+  "created_at": "2026-10-08T13:54:39.349409+00:00",
+  "audit_notes": "Patient-level grouping ENABLED. 4 unique subjects partitioned. Zero inter-slice or inter-scan cross-contamination across splits."
+}

@@ -29,3 +29,130 @@ body {
 img {
   display: block;
 }
+
+/* --- Interactive Split Comparison Slider --- */
+.compare-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.compare-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 540px;
+  overflow: hidden;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compare-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.compare-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 10;
+  border-right: 2px solid #38bdf8;
+  box-shadow: 2px 0 16px rgba(56, 189, 248, 0.4);
+}
+
+.compare-overlay .compare-img {
+  /* To keep overlay image sized strictly to the full viewport width */
+  width: var(--viewport-width, 100%);
+  max-width: none;
+}
+
+.compare-slider-handle {
+  position: absolute;
+  top: 50%;
+  right: -18px;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background-color: #0f172a;
+  border: 2px solid #38bdf8;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+  cursor: ew-resize;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.compare-label {
+  position: absolute;
+  top: 1rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  z-index: 15;
+  pointer-events: none;
+}
+
+.compare-label-before {
+  left: 1rem;
+  background-color: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+}
+
+.compare-label-after {
+  right: 1rem;
+  background-color: rgba(6, 78, 59, 0.85);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  color: #6ee7b7;
+}
+
+/* --- Magnifier Loupe --- */
+.magnifier-lens {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 9999px;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  display: none;
+  z-index: 30;
+  background-repeat: no-repeat;
+  background-color: #000;
+  cursor: crosshair;
+}
+
+/* Modal styles */
+.modal-backdrop {
+  background-color: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(12px);
+}
+

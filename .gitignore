@@ -9,6 +9,8 @@ __pycache__/
 
 # Database
 *.db
+*.db-wal
+*.db-shm
 
 # Model files (important)
 *.h5
@@ -32,3 +34,25 @@ __pycache__/
 
 # Virtual env
 venv/
+
+# Environment and secrets
+.env
+.dev_session_secret
+
+# Benchmark data and run artifacts
+data/benchmark/raw/*
+!data/benchmark/raw/.gitkeep
+data/benchmark/processed/*
+!data/benchmark/processed/.gitkeep
+data/benchmark/ground_truth/*
+!data/benchmark/ground_truth/.gitkeep
+data/benchmark/degraded/*
+!data/benchmark/degraded/.gitkeep
+data/benchmark/chest_xray14/
+benchmark_runs/*
+!benchmark_runs/.gitkeep
+scratch/
+
+# Archives
+*.zip
+*.tar.gz

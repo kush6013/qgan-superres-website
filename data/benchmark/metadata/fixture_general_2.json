@@ -1,0 +1,19 @@
+{
+  "sample_id": "fixture_general_2",
+  "modality": "general",
+  "source_dataset": "synthetic_benchmark_fixtures",
+  "original_filename": "fixture_general_2_gt.png",
+  "original_dimensions": [
+    256,
+    256
+  ],
+  "channel_count": 1,
+  "bit_depth": 8,
+  "original_format": "PNG",
+  "ground_truth_path": "data/benchmark/ground_truth/fixture_general_2_gt.png",
+  "split": "test",
+  "reference_type": "synthetic_ground_truth",
+  "patient_id": "PAT_GEN_1",
+  "degradation_config_id": null,
+  "checksum": "a27db5412c762143aaf2abdd3c479a8b02a223f597ed48b0f815e2f3929257e5"
+}

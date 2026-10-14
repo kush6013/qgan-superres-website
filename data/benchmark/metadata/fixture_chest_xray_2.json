@@ -1,0 +1,19 @@
+{
+  "sample_id": "fixture_chest_xray_2",
+  "modality": "chest_xray",
+  "source_dataset": "synthetic_benchmark_fixtures",
+  "original_filename": "fixture_chest_xray_2_gt.png",
+  "original_dimensions": [
+    256,
+    256
+  ],
+  "channel_count": 1,
+  "bit_depth": 8,
+  "original_format": "PNG",
+  "ground_truth_path": "data/benchmark/ground_truth/fixture_chest_xray_2_gt.png",
+  "split": "test",
+  "reference_type": "synthetic_ground_truth",
+  "patient_id": "PAT_CHE_3",
+  "degradation_config_id": null,
+  "checksum": "332e1a6bb59365b6ef7fce152750e2ec9224a53ec25b333eeb77690e6886fdf3"
+}

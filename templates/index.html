@@ -32,9 +32,114 @@
 
       <input id="file-input" type="file" name="file" accept=".png,.jpg,.jpeg,.dcm,.nii,.nii.gz,image/*" class="hidden">
 
+      <!-- Radiologic Windowing & Multi-Slice Volume Controls -->
+      <div id="radiology-controls" class="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-cyan-400">🎛</span>
+            <span class="text-xs font-semibold text-slate-200 uppercase tracking-wider">Radiologic HU Windowing & Volume Slicing</span>
+          </div>
+          <span id="volume-indicator" class="text-xs text-slate-500 font-mono">2D Mode</span>
+        </div>
+
+        <!-- Scan Modality Preset Selection -->
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-2">Target Scan Modality (Fine-Tuned Model Weights)</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="modality-selector-group">
+            <button type="button" class="modality-btn active rounded-xl border border-cyan-400 bg-cyan-500/20 px-3 py-2 text-xs font-semibold text-cyan-200 transition" data-modality="general">
+              🔬 General Medical
+            </button>
+            <button type="button" class="modality-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-modality="brain_mri">
+              🧠 Brain MRI
+            </button>
+            <button type="button" class="modality-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-modality="chest_xray">
+              🫁 Chest X-ray
+            </button>
+            <button type="button" class="modality-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-modality="ct_scan">
+              🦴 CT Scan
+            </button>
+          </div>
+        </div>
+
+        <!-- HU Window Presets -->
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-2">Clinical Hounsfield Unit (HU) Window Preset</label>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="hu-preset-group">
+            <button type="button" class="hu-preset-btn active rounded-xl border border-cyan-400 bg-cyan-500/20 px-3 py-2 text-xs font-semibold text-cyan-200 transition" data-preset="auto">
+              Auto Contrast
+            </button>
+            <button type="button" class="hu-preset-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-preset="soft_tissue">
+              Soft Tissue (40/400)
+            </button>
+            <button type="button" class="hu-preset-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-preset="bone">
+              Bone (400/1800)
+            </button>
+            <button type="button" class="hu-preset-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-preset="lung">
+              Lung (-600/1500)
+            </button>
+            <button type="button" class="hu-preset-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-preset="brain">
+              Brain (40/80)
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Volume Slicing Controls (Shows when 3D DICOM / NIfTI is loaded) -->
+        <div id="slice-slider-wrapper" class="hidden pt-2 border-t border-slate-800/60 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-400">Volumetric Slice Scrubber:</span>
+            <span class="text-cyan-300 font-mono font-semibold" id="slice-counter">Slice 1 / 1</span>
+          </div>
+          <input type="range" id="slice-range" min="0" max="0" value="0" class="w-full accent-cyan-400 cursor-pointer">
+        </div>
+
+        <!-- Selectable Upscaling Factors (2x, 4x, 8x) -->
+        <div class="pt-2 border-t border-slate-800/60">
+          <label class="block text-xs font-medium text-slate-400 mb-2">Super-Resolution Magnification Scale</label>
+          <div class="grid grid-cols-3 gap-2" id="scale-selector-group">
+            <button type="button" class="scale-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-scale="2">
+              2x Magnification
+            </button>
+            <button type="button" class="scale-btn rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 transition" data-scale="4">
+              4x Magnification
+            </button>
+            <button type="button" class="scale-btn active rounded-xl border border-cyan-400 bg-cyan-500/20 px-3 py-2 text-xs font-semibold text-cyan-200 transition" data-scale="8">
+              8x Magnification <span class="text-[10px] text-cyan-300 font-normal">(Full QGAN)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p class="text-slate-500 text-sm">Choose a scan file and the server will enhance it automatically at 8x resolution.</p>
-        <button id="upload-button" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400">Upload and enhance</button>
+        <p class="text-slate-500 text-sm">Choose a scan file and the server will enhance it automatically with live progress tracking.</p>
+        <button id="upload-button" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-sm font-medium text-slate-950 hover:bg-cyan-400 cursor-pointer font-semibold shadow-lg shadow-cyan-500/20 transition">Upload and enhance</button>
+      </div>
+    </div>
+
+    <!-- Async Processing Progress Indicator Card -->
+    <div id="processing-progress-card" class="hidden rounded-3xl bg-slate-900/90 border border-slate-800 p-6 sm:p-8 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative flex h-3.5 w-3.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-500"></span>
+          </div>
+          <div>
+            <h3 class="text-base font-semibold text-slate-100">Quantum Neural Processing</h3>
+            <p class="text-xs text-slate-400" id="progress-step-text">Initializing background enhancement worker...</p>
+          </div>
+        </div>
+        <span class="text-lg font-mono font-bold text-cyan-300" id="progress-pct-text">0%</span>
+      </div>
+      
+      <div class="w-full bg-slate-950 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-800">
+        <div id="progress-bar-fill" class="bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-400 h-full rounded-full transition-all duration-300 ease-out shadow-sm" style="width: 5%"></div>
+      </div>
+
+      <div class="flex items-center justify-between text-[11px] text-slate-500 font-mono">
+        <span id="progress-hipaa-badge" class="inline-flex items-center gap-1 text-slate-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> HIPAA Safe Harbor PHI Inspection Active
+        </span>
+        <span id="progress-scale-badge" class="text-amber-300 font-semibold">QGAN 8x</span>
       </div>
     </div>
 
@@ -49,8 +154,8 @@
       <ul class="space-y-3 text-slate-400 text-sm">
         <li>• Upload a medical image with optional metadata.</li>
         <li>• The QGAN-inspired model enhances resolution by 8x.</li>
-        <li>• Optional hybrid quantum refinement is available for experimentation.</li>
-        <li>• Compare the original and result instantly.</li>
+        <li>• Interactive before/after split slider & 2.5x magnifier loupe.</li>
+        <li>• Real-time Image Quality Assessment (PSNR, SSIM, and Edge Sharpness).</li>
         <li>• Search your gallery by filename, description, tags, and patient ID.</li>
       </ul>
     </div>

@@ -42,11 +42,18 @@
           <p class="text-slate-500 text-sm mt-1">Patient ID: {{ item.patient_id }}</p>
           {% endif %}
         </div>
-        <div class="flex flex-wrap gap-3 items-center justify-start sm:justify-end">
-          <a href="{{ item.result_url }}" class="rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-200 hover:bg-cyan-500/20">Download result</a>
+        <div class="flex flex-wrap gap-2 items-center justify-start sm:justify-end">
+          <button type="button" class="btn-inspect-compare rounded-full border border-cyan-400 bg-cyan-500/20 px-4 py-2 text-sm font-medium text-cyan-200 hover:bg-cyan-500/30 transition shadow-sm" data-original="{{ item.original_url }}" data-result="{{ item.result_url }}" data-title="{{ item.filename }}" data-psnr="{{ item.psnr or '' }}" data-ssim="{{ item.ssim or '' }}" data-sharpness="{{ item.sharpness or '' }}" data-window="{{ item.window_preset or '' }}" data-slice="{{ item.slice_index if item.slice_index is not none else '' }}" data-scale="{{ item.scale_factor or 8 }}" data-report-url="/report/{{ item.id }}" data-dicom-url="{{ item.dicom_url or '' }}" data-deidentified="{{ 'true' if item.deidentified else 'false' }}" data-modality="{{ item.modality or 'general' }}">
+            🔍 Compare
+          </button>
+          {% if item.dicom_url %}
+          <a href="{{ item.dicom_url }}" download class="rounded-full border border-indigo-400/80 bg-indigo-500/20 px-4 py-2 text-sm text-indigo-200 hover:bg-indigo-500/30 transition font-medium">💾 .DCM</a>
+          {% endif %}
+          <a href="{{ item.result_url }}" download class="rounded-full border border-slate-700 bg-slate-800/80 px-4 py-2 text-sm text-slate-200 hover:border-slate-500 transition">Download</a>
+          <a href="/report/{{ item.id }}" target="_blank" class="rounded-full border border-cyan-700/60 bg-cyan-950/40 px-4 py-2 text-sm text-cyan-300 hover:bg-cyan-900/60 hover:text-cyan-200 transition">📄 Report</a>
           {% if item.is_owner %}
           <form method="post" action="/gallery/delete/{{ item.id }}" onsubmit="return confirm('Delete this upload?');">
-            <button type="submit" class="rounded-full border border-rose-500 bg-rose-500/10 px-4 py-2 text-sm text-rose-300 hover:bg-rose-500/20">Delete</button>
+            <button type="submit" class="rounded-full border border-rose-500/40 bg-rose-500/10 px-4 py-2 text-sm text-rose-300 hover:bg-rose-500/20 transition">Delete</button>
           </form>
           {% endif %}
         </div>
@@ -63,11 +70,49 @@
         </div>
       </div>
 
-      <div class="mt-4 flex items-center justify-end">
-        <form method="post" action="/gallery/delete/{{ item.id }}" onsubmit="return confirm('Delete this upload?');">
-          <button type="submit" class="rounded-full border border-rose-500 bg-rose-500/10 px-4 py-2 text-sm text-rose-300 hover:bg-rose-500/20">Delete image</button>
-        </form>
+      {% if item.psnr or item.ssim or item.sharpness or (item.window_preset and item.window_preset != 'auto') or (item.slice_index is not none) or item.scale_factor or item.deidentified or item.modality %}
+      <div class="mt-4 flex flex-wrap items-center gap-2 text-xs">
+        {% if item.modality and item.modality != 'general' %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-violet-950/80 border border-violet-800/60 px-3 py-1 text-violet-300 font-semibold">
+          <strong class="font-semibold text-slate-400">Modality:</strong> {{ item.modality | replace('_', ' ') | capitalize }}
+        </span>
+        {% endif %}
+        {% if item.deidentified %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-950/80 border border-emerald-800/60 px-3 py-1 text-emerald-300 font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> HIPAA De-identified
+        </span>
+        {% endif %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-slate-900 border border-slate-700 px-3 py-1 text-amber-300">
+          <strong class="font-semibold text-slate-400">Scale:</strong> {{ item.scale_factor or 8 }}x
+        </span>
+        {% if item.window_preset and item.window_preset != 'auto' %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-slate-900 border border-slate-700 px-3 py-1 text-slate-300">
+          <strong class="font-semibold text-slate-400">HU:</strong> {{ item.window_preset | capitalize }}
+        </span>
+        {% endif %}
+        {% if item.slice_index is not none %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-cyan-950/80 border border-cyan-800/60 px-3 py-1 text-cyan-300">
+          <strong class="font-semibold text-slate-400">Slice:</strong> #{{ item.slice_index + 1 }}
+        </span>
+        {% endif %}
+        {% if item.psnr %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-cyan-950/80 border border-cyan-800/60 px-3 py-1 text-cyan-300" title="PSNR fidelity relative to bicubic-upscaled baseline (algorithmic benchmark)">
+          <strong class="font-semibold text-slate-400">PSNR:</strong> {{ item.psnr }} dB
+        </span>
+        {% endif %}
+        {% if item.ssim %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-950/80 border border-emerald-800/60 px-3 py-1 text-emerald-300" title="SSIM structural similarity relative to bicubic-upscaled baseline">
+          <strong class="font-semibold text-slate-400">SSIM:</strong> {{ item.ssim }}
+        </span>
+        {% endif %}
+        {% if item.sharpness %}
+        <span class="inline-flex items-center gap-1 rounded-full bg-indigo-950/80 border border-indigo-800/60 px-3 py-1 text-indigo-300" title="Laplacian high-frequency edge variance">
+          <strong class="font-semibold text-slate-400">Sharpness:</strong> {{ item.sharpness }}
+        </span>
+        {% endif %}
       </div>
+      {% endif %}
+
 
       {% if item.description or item.tags %}
       <div class="mt-6 rounded-3xl border border-slate-800 bg-slate-950 p-4 text-sm text-slate-400">
